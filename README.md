@@ -3,7 +3,7 @@ CMB2 custom field "post_search_ajax"
 
 Custom field for [CMB2](https://github.com/WebDevStudios/CMB2) to attach posts to each others.
 
-Same approach than [CMB2 Attached Posts Field](https://raw.githubusercontent.com/WebDevStudios/cmb2-attached-posts) with Ajax request, multiple/single option, and different UI.
+Same approach than [CMB2 Attached Posts Field](https://github.com/WebDevStudios/cmb2-attached-posts/) with Ajax request, multiple/single option, and different UI.
 
 ## Installation
 
