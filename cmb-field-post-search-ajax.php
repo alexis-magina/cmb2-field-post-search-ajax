@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: CMB2 Field Type: Post Search Ajax
-Plugin URI: https://github.com/alexis-magina/CMB2-Post-Search-Ajax-field
-GitHub Plugin URI: https://github.com/alexis-magina/CMB2-Post-Search-Ajax-field
+Plugin URI: https://github.com/alexis-magina/cmb2-field-post-search-ajax
+GitHub Plugin URI: https://github.com/alexis-magina/cmb2-field-post-search-ajax
 Description: CMB2 field type to attach posts to each others.
 Version: 1.0.0
 Author: Magina
