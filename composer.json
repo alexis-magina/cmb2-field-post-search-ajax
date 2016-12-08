@@ -1,0 +1,26 @@
+{
+    "name": "alexis-magina/cmb2-field-post-search-ajax",
+    "description": "CMB2 field type to attach posts to each others. Search with Ajax.",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Magina",
+            "email": "contact@magina.fr",
+            "homepage": "https://github.com/alexis-magina/",
+            "role": "Developer"
+        }
+    ],
+    "keywords": ["wordpress", "plugin", "metabox", "post", "relationship", "attached", "related"],
+    "homepage": "https://github.com/alexis-magina/cmb2-field-post-search-ajax",
+    "type": "wordpress-plugin",
+    "support": {
+        "issues": "https://github.com/alexis-magina/cmb2-field-post-search-ajax/issues",
+        "source": "https://github.com/alexis-magina/cmb2-field-post-search-ajax/"
+    },
+    "require": {
+        "php": ">5.2.4"
+    },
+    "suggest": {
+        "composer/installers": "~1.0"
+    }
+}
