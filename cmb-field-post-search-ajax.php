@@ -38,10 +38,12 @@ class MAG_CMB2_Field_Post_Search_Ajax {
 		
 		if($field->args( 'limit' ) > 1){
 			echo '<ul class="cmb-post-search-ajax-results" id="' . $field_name . '_results">';
-			if($value && !is_array($value)){ $value = array($value); }
-			foreach($value as $val){
-				$handle = ($field->args( 'sortable' )) ? '<span class="hndl"></span>' : '';	
-				echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.get_edit_post_link($val).'" target="_blank" class="edit-link">'.get_the_title($val).'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>';
+			if( isset($value) && !empty($value) ){
+				if( !is_array($value) ){ $value = array($value); }
+				foreach($value as $val){
+					$handle = ($field->args( 'sortable' )) ? '<span class="hndl"></span>' : '';	
+					echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.get_edit_post_link($val).'" target="_blank" class="edit-link">'.get_the_title($val).'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>';
+				}
 			}
 			echo '</ul>';			
 			$field_value = '';
