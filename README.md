@@ -37,3 +37,9 @@ If field limit == 1, this will return only the single attached post ID.
 
 ### 1.0.0
 * Initial commit
+
+### 1.1.0-sebask
+* Added a function which enables usage of CMB2 Field Post Search Ajax from a location other then the Wordpress Plugins folder.
+
+### 1.1.1-sebask
+* Fixed a minor bug which caused the use of an undefined constant.
