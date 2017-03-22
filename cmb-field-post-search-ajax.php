@@ -21,6 +21,11 @@ class MAG_CMB2_Field_Post_Search_Ajax {
 	const VERSION = '1.0.0';
 
 	/**
+	 * The url which is used to load local resources
+	 */
+	protected static $url = '';
+	
+	/**
 	 * Initialize the plugin by hooking into CMB2
 	 */
 	public function __construct() {
@@ -92,18 +97,45 @@ class MAG_CMB2_Field_Post_Search_Ajax {
 	}
 
 	/**
+	 * Defines the url which is used to load local resources. Based on, and uses, 
+	 * the CMB2_Utils class from the CMB2 library.
+	 */
+	public static function url( $path = '' ) {
+		if ( self::$url ) {
+			return self::$url . $path;
+		}
+		
+		/**
+		 * Set the variable cmb2_fpsa_dir
+		 */
+		$cmb2_fpsa_dir = trailingslashit( dirname( __FILE__ ) );
+		
+		/**
+		 * Use CMB2_Utils to gather the url from cmb2_fpsa_dir
+		 */	
+		$cmb2_fpsa_url = CMB2_Utils::get_url_from_dir( $cmb2_fpsa_dir );
+	
+		/**
+		 * Filter the CMB2 FPSA location url
+		 */
+		self::$url = trailingslashit( apply_filters( 'cmb2_fpsa_url', $cmb2_fpsa_url, VERSION ) );
+	
+		return self::$url . $path;
+	}
+	
+	/**
 	 * Enqueue scripts and styles
 	 */
 	public function setup_admin_scripts() {
 		
-		wp_register_script( 'jquery-autocomplete', plugins_url( 'js/jquery.autocomplete.min.js', __FILE__ ), array( 'jquery' ), self::VERSION );
-		wp_register_script( 'mag-post-search-ajax', plugins_url( 'js/mag-post-search-ajax.js', __FILE__ ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION );
+		wp_register_script( 'jquery-autocomplete', self::url( 'js/jquery.autocomplete.min.js' ), array( 'jquery' ), self::VERSION );
+		wp_register_script( 'mag-post-search-ajax', self::url( 'js/mag-post-search-ajax.js' ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION );
 		wp_localize_script( 'mag-post-search-ajax', 'psa', array(
 			'ajaxurl' 	=> admin_url( 'admin-ajax.php' ),
 			'nonce'		=> wp_create_nonce( 'mag_cmb_post_search_ajax_get_results' )
 		) ); 
 		wp_enqueue_script( 'mag-post-search-ajax' );
-		wp_enqueue_style( 'mag-post-search-ajax', plugins_url( 'css/mag-post-search-ajax.css', __FILE__ ), array(), self::VERSION );
+		wp_enqueue_style( 'mag-post-search-ajax', self::url( 'css/mag-post-search-ajax.css' ), array(), self::VERSION );
 		
 	}
 	
