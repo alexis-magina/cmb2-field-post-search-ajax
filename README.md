@@ -64,3 +64,5 @@ If field limit == 1, this will return only the single attached post ID.
 * Added a filter "mag_cmb_post_search_ajax_result" to allow customize ajax results
 * Fixed a minor bug of encoding chars in autocomplete results
 
+### 1.1.3
+* Add Support for user queries
