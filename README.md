@@ -22,6 +22,20 @@ Options :
 - sortable (bool, default = false) : Allow selected posts to be sort
 - query_args (array) : setup the ajax search query : pass a wp_query args array.
 
+Filter : (since 1.1.2)
+Ajax results can be filtered to customize returned text and posts values.
+Use filter "mag_cmb_post_search_ajax_result", for example :
+```
+function example_callback( $arr ) {
+	// $arr['data'] : contains post_id
+	// $arr['guid'] : contains admin edit post url
+	// $arr['value'] : contains post title
+	$arr['value'] = 'Custom string '.$arr['value'];
+    return $arr;
+}
+add_filter( 'mag_cmb_post_search_ajax_result', 'example_callback' );
+```
+
 ## Usage - FrontEnd
 
 You can retrieve the meta data using get_post_meta( get_the_ID(), 'your_field_id', true ); 
@@ -43,3 +57,10 @@ If field limit == 1, this will return only the single attached post ID.
 
 ### 1.1.1-sebask
 * Fixed a minor bug which caused the use of an undefined constant.
+
+### 1.1.2
+* Fixed issue #2 : no way to delete value for fields with limit = 1
+* Added a class exists check (issue #3)
+* Added a filter "mag_cmb_post_search_ajax_result" to allow customize ajax results
+* Fixed a minor bug of encoding chars in autocomplete results
+
