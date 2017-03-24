@@ -6,6 +6,7 @@
 			
 			var fid 		= $(this).attr('id');
 			var query_args 	= $(this).attr('data-queryargs');
+			var object		= $(this).attr('data-object');
 			$(this).autocomplete({
 				serviceUrl: psa.ajaxurl,
 				type: 'POST',
@@ -34,6 +35,7 @@
 				params:{
 					action  	: 'cmb_post_search_ajax_get_results',
 					psacheck	: psa.nonce,
+					object		: object,
 					query_args	: query_args,
 				},
 				onSearchStart: function(){
@@ -48,7 +50,7 @@
 					var limit 	 = $(this).attr('data-limit');
 					var sortable = $(this).attr('data-sortable');
 					if( limit > 1 ){
-						var handle = (sortable === 1) ? '<span class="hndl"></span>' : '';				
+						var handle = (sortable == 1) ? '<span class="hndl"></span>' : '';				
 						$('#'+lid).append('<li>'+handle+'<input type="hidden" name="'+lid+'[]" value="'+suggestion.data+'"><a href="'+suggestion.guid+'" target="_blank" class="edit-link">'+suggestion.value+'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>');
 						$(this).val('');
 						if( limit === $('#' + lid + ' li').length ){
@@ -64,7 +66,7 @@
 				}
 			});			
 		
-			if($(this).attr('data-sortable') === 1){
+			if($(this).attr('data-sortable') == 1){
 				$('#'+fid+'_results').sortable({ 
 					handle				 : '.hndl', 
 					placeholder			 : 'ui-state-highlight', 
@@ -72,7 +74,7 @@
 				});	
 			}
 			
-			if($(this).attr('data-limit') === 1){
+			if($(this).attr('data-limit') == 1){
 				$(this).on('blur', function(){
 					if($(this).val() === ''){
 						var lid = $(this).attr('id') + '_results';
