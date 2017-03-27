@@ -4,7 +4,7 @@ Plugin Name: CMB2 Field Type: Post Search Ajax
 Plugin URI: https://github.com/alexis-magina/cmb2-field-post-search-ajax
 GitHub Plugin URI: https://github.com/alexis-magina/cmb2-field-post-search-ajax
 Description: CMB2 field type to attach posts to each others.
-Version: 1.1.2
+Version: 1.1.3
 Author: Magina
 Author URI: http://magina.fr/
 License: GPLv2+
@@ -20,7 +20,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '1.1.2';
+		const VERSION = '1.1.3';
 
 		/**
 		 * The url which is used to load local resources
@@ -49,15 +49,29 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 					if( !is_array($value) ){ $value = array($value); }
 					foreach($value as $val){
 						$handle = ($field->args( 'sortable' )) ? '<span class="hndl"></span>' : '';	
-						echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.get_edit_post_link($val).'" target="_blank" class="edit-link">'.get_the_title($val).'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>';
+						if( $field->args( 'object_type' ) == 'user' ){
+							$guid 	= get_edit_user_link($val);
+							$user	= get_userdata($val);
+							$title	= $user->display_name;
+						}
+						else{
+							$guid 	= get_edit_post_link($val);
+							$title	= get_the_title($val);
+						}
+						echo '<li>'.$handle.'<input type="hidden" name="'.$field_name.'_results[]" value="'.$val.'"><a href="'.$guid.'" target="_blank" class="edit-link">'.$title.'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>';
 					}
 				}
 				echo '</ul>';			
 				$field_value = '';
 			}
 			else{
-				if(is_array($value)){ $value = $value[0]; }	
-				$field_value = ($value ? get_the_title($value) : '');
+				if(is_array($value)){ $value = $value[0]; }
+				if( $field->args( 'object_type' ) == 'user' ){
+					$field_value = ($value ? get_userdata($value)->display_name : '');
+				}
+				else{
+					$field_value = ($value ? get_the_title($value) : '');
+				}
 				echo $field_type->input( array( 
 					'type' 	=> 'hidden',
 					'name' 	=> $field_name . '_results',
@@ -75,6 +89,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 				'desc'			=> false,
 				'data-limit'	=> $field->args( 'limit' ) ? $field->args( 'limit' ) : '1',
 				'data-sortable'	=> $field->args( 'sortable' ) ? $field->args( 'sortable' ) : '0',
+				'data-object'	=> $field->args( 'object_type' ) ? $field->args( 'object_type' ) : 'post',
 				'data-queryargs'=> $field->args( 'query_args' ) ? htmlspecialchars( json_encode( $field->args( 'query_args' ) ), ENT_QUOTES, 'UTF-8' ) : ''
 			) );
 
@@ -152,18 +167,35 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 			else {
 				$args 		= json_decode(stripslashes(htmlspecialchars_decode($_POST['query_args'])), true);
 				$args['s'] 	= $_POST['query'];
-				$results 	= new WP_Query( $args );
 				$datas 		= array();
-				if ( $results->have_posts() ) :
-					while ( $results->have_posts() ) : $results->the_post();
-						// Define filter "mag_cmb_post_search_ajax_result" to allow customize ajax results.
-						$datas[] = apply_filters( 'mag_cmb_post_search_ajax_result', array(
-							'value' => get_the_title(),
-							'data'	=> get_the_ID(),
-							'guid'	=> get_edit_post_link()
-						) );
-					endwhile;
-				endif;
+				if( $_POST['object'] == 'user' ){
+					$args['search'] = '*'.esc_attr($_POST['query']).'*';
+					$users 	= new WP_User_Query( $args );
+					$results = $users->get_results();
+					if (!empty($results)) {
+						foreach( $results as $result ){
+							$user_info = get_userdata($result->ID);
+							// Define filter "mag_cmb_post_search_ajax_result" to allow customize ajax results.
+							$datas[] = apply_filters( 'mag_cmb_post_search_ajax_result', array(
+								'value' => $user_info->display_name,
+								'data'	=> $result->ID,
+								'guid'	=> get_edit_user_link($result->ID)
+							) );
+						}
+					}
+				}else{
+					$results 	= new WP_Query( $args );
+					if ( $results->have_posts() ) :
+						while ( $results->have_posts() ) : $results->the_post();
+							// Define filter "mag_cmb_post_search_ajax_result" to allow customize ajax results.
+							$datas[] = apply_filters( 'mag_cmb_post_search_ajax_result', array(
+								'value' => get_the_title(),
+								'data'	=> get_the_ID(),
+								'guid'	=> get_edit_post_link()
+							) );
+						endwhile;
+					endif;	
+				}				
 				wp_reset_postdata();
 				die( json_encode( $datas ) );			
 			}
