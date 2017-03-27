@@ -66,3 +66,5 @@ If field limit == 1, this will return only the single attached post ID.
 
 ### 1.1.3
 * Add Support for user queries
+* Fixed issue #11 : sorting problem
+* Fixed conflict with ui-autocomplete
