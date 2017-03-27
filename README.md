@@ -13,6 +13,12 @@ You can install this field type as you would a WordPress plugin:
 - Place the plugin folder in your /wp-content/plugins/ directory
 - Activate the plugin in the Plugin dashboard
 
+Composer Intallation:
+
+```
+composer require webdevstudios/cmb2-post-search-field:1.1.3
+```
+
 ## Usage - Admin
 
 Follow the example in [`example-field-setup.php`](https://github.com/alexis-magina/cmb2-field-post-search-ajax/blob/master/example-field-setup.php) for a demonstration.
