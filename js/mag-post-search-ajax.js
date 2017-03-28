@@ -7,7 +7,7 @@
 			var fid 		= $(this).attr('id');
 			var query_args 	= $(this).attr('data-queryargs');
 			var object		= $(this).attr('data-object');
-			$(this).autocomplete({
+			$(this).devbridgeAutocomplete({
 				serviceUrl: psa.ajaxurl,
 				type: 'POST',
 				triggerSelectOnValidInput: false,
@@ -45,7 +45,7 @@
 					$(this).next('img.cmb-post-search-ajax-spinner').hide();
 				},
 				onSelect: function (suggestion) {
-					$(this).autocomplete('clearCache');
+					$(this).devbridgeAutocomplete('clearCache');
 					var lid 	 = $(this).attr('id') + '_results';
 					var limit 	 = $(this).attr('data-limit');
 					var sortable = $(this).attr('data-sortable');
@@ -91,7 +91,7 @@
 			var iid = $(this).parents('ul').attr('id').replace('_results', '');
 			$(this).remove(); 
 			$('#' + iid).removeProp( 'disabled' );
-			$('#' + iid).autocomplete('clearCache');
+			$('#' + iid).devbridgeAutocomplete('clearCache');
 		});
 	});
 	  
