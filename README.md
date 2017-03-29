@@ -16,7 +16,7 @@ You can install this field type as you would a WordPress plugin:
 Composer Intallation:
 
 ```
-composer require webdevstudios/cmb2-post-search-field:1.1.3
+composer require alexis-magina/cmb2-field-post-search-ajax:dev-master
 ```
 
 ## Usage - Admin
