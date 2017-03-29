@@ -74,3 +74,7 @@ If field limit == 1, this will return only the single attached post ID.
 * Add Support for user queries
 * Fixed issue #11 : sorting problem
 * Fixed conflict with ui-autocomplete
+
+### 1.1.4-sebask
+* Fixed issue #14: safe mode for jquery-ui-autocomplete and devbridge/jQuery-Autocomplete compatibility.
+
