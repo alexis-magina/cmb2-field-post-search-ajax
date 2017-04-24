@@ -4,7 +4,7 @@ Plugin Name: CMB2 Field Type: Post Search Ajax
 Plugin URI: https://github.com/alexis-magina/cmb2-field-post-search-ajax
 GitHub Plugin URI: https://github.com/alexis-magina/cmb2-field-post-search-ajax
 Description: CMB2 field type to attach posts to each others.
-Version: 1.1.4-sebask
+Version: 1.1.5
 Author: Magina
 Author URI: http://magina.fr/
 License: GPLv2+
@@ -20,7 +20,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '1.1.4-sebask';
+		const VERSION = '1.1.5';
 
 		/**
 		 * The url which is used to load local resources
@@ -104,7 +104,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 		 */
 		public function sanitize( $override_value, $value, $object_id, $field_args ) {
 			$fid = $field_args['id'];
-			if($field_args['render_row_cb'][0]->data_to_save[$fid.'_results']){
+			if( !empty( $field_args['render_row_cb'][0]->data_to_save[$fid.'_results'] ) ){
 				$value = $field_args['render_row_cb'][0]->data_to_save[$fid.'_results'];
 			}
 			else{
