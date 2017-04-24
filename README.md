@@ -78,3 +78,5 @@ If field limit == 1, this will return only the single attached post ID.
 ### 1.1.4-sebask
 * Fixed issue #14: safe mode for jquery-ui-autocomplete and devbridge/jQuery-Autocomplete compatibility.
 
+### 1.1.5
+* Fixed issue #17 : Undefined index if the field is empty
