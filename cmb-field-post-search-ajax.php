@@ -106,8 +106,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 			$fid = $field_args['id'];
 			if( !empty( $field_args['render_row_cb'][0]->data_to_save[$fid.'_results'] ) ){
 				$value = $field_args['render_row_cb'][0]->data_to_save[$fid.'_results'];
-			}
-			else{
+			} elseif ( empty( DOING_AJAX ) ) {
 				$value = false;
 			}
 			return $value;
