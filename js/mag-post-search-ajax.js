@@ -49,7 +49,7 @@
 					var lid 	 = $(this).attr('id') + '_results';
 					var limit 	 = $(this).attr('data-limit');
 					var sortable = $(this).attr('data-sortable');
-					if( limit > 1 ){
+					if( 1 !== limit ){
 						var handle = (sortable == 1) ? '<span class="hndl"></span>' : '';				
 						$('#'+lid).append('<li>'+handle+'<input type="hidden" name="'+lid+'[]" value="'+suggestion.data+'"><a href="'+suggestion.guid+'" target="_blank" class="edit-link">'+suggestion.value+'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>');
 						$(this).val('');
