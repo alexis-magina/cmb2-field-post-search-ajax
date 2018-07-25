@@ -43,7 +43,7 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 			$this->setup_admin_scripts();
 			$field_name = $field->_name();
 
-			if($field->args( 'limit' ) > 1){
+			if(1 !== $field->args( 'limit' )){
 				echo '<ul class="cmb-post-search-ajax-results" id="' . $field_name . '_results">';
 				if( isset($value) && !empty($value) ){
 					if( !is_array($value) ){ $value = array($value); }
