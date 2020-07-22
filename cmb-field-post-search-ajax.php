@@ -146,14 +146,14 @@ if( ! class_exists( 'MAG_CMB2_Field_Post_Search_Ajax' ) ) {
 		public function setup_admin_scripts() {
 
 			wp_register_script( 'jquery-autocomplete', self::url( 'js/jquery.autocomplete.min.js' ), array( 'jquery' ), self::VERSION );
-			wp_register_script( 'mag-post-search-ajax', self::url( 'js/mag-post-search-ajax.js' ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION );
+			wp_register_script( 'mag-post-search-ajax', self::url( 'js/mag-post-search-ajax.min.js' ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION );
 			wp_localize_script( 'mag-post-search-ajax', 'psa', array(
 				'ajaxurl' 	=> admin_url( 'admin-ajax.php' ),
 				'nonce'		=> wp_create_nonce( 'mag_cmb_post_search_ajax_get_results' ),
 				'notice'  => __( 'No results found.' ),
 			) );
 			wp_enqueue_script( 'mag-post-search-ajax' );
-			wp_enqueue_style( 'mag-post-search-ajax', self::url( 'css/mag-post-search-ajax.css' ), array(), self::VERSION );
+			wp_enqueue_style( 'mag-post-search-ajax', self::url( 'css/mag-post-search-ajax.min.css' ), array(), self::VERSION );
 
 		}
 
