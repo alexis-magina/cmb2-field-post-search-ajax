@@ -1,9 +1,9 @@
 (function($) {
   $(function() {
-	
+
 	$('.cmb-post-search-ajax').each(
 		function () {
-			
+
 			var fid 		= $(this).attr('id');
 			var query_args 	= $(this).attr('data-queryargs');
 			var object		= $(this).attr('data-object');
@@ -12,6 +12,7 @@
 				type: 'POST',
 				triggerSelectOnValidInput: false,
 				showNoSuggestionNotice: true,
+				noSuggestionNotice: psa.notice,
 				transformResult: function(r) {
 					var suggestions = $.parseJSON(r);
 					if($('#'+fid+'_results li').length){
@@ -50,7 +51,7 @@
 					var limit 	 = $(this).attr('data-limit');
 					var sortable = $(this).attr('data-sortable');
 					if( limit > 1 ){
-						var handle = (sortable == 1) ? '<span class="hndl"></span>' : '';				
+						var handle = (sortable == 1) ? '<span class="hndl"></span>' : '';
 						$('#'+lid).append('<li>'+handle+'<input type="hidden" name="'+lid+'[]" value="'+suggestion.data+'"><a href="'+suggestion.guid+'" target="_blank" class="edit-link">'+suggestion.value+'</a><a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a></li>');
 						$(this).val('');
 						if( limit === $('#' + lid + ' li').length ){
@@ -64,16 +65,16 @@
 						$('input[name='+lid+']').val(suggestion.data);
 					}
 				}
-			});			
-		
+			});
+
 			if($(this).attr('data-sortable') == 1){
-				$('#'+fid+'_results').sortable({ 
-					handle				 : '.hndl', 
-					placeholder			 : 'ui-state-highlight', 
-					forcePlaceholderSize : true 
-				});	
+				$('#'+fid+'_results').sortable({
+					handle				 : '.hndl',
+					placeholder			 : 'ui-state-highlight',
+					forcePlaceholderSize : true
+				});
 			}
-			
+
 			if($(this).attr('data-limit') == 1){
 				$(this).on('blur', function(){
 					if($(this).val() === ''){
@@ -82,18 +83,18 @@
 					}
 				});
 			}
-		
+
 		}
 	);
-	
+
 	$('.cmb-post-search-ajax-results').on( 'click', 'a.remover', function(){
-		$(this).parent('li').fadeOut( 400, function(){ 
+		$(this).parent('li').fadeOut( 400, function(){
 			var iid = $(this).parents('ul').attr('id').replace('_results', '');
-			$(this).remove(); 
+			$(this).remove();
 			$('#' + iid).removeProp( 'disabled' );
 			$('#' + iid).devbridgeAutocomplete('clearCache');
 		});
 	});
-	  
+
   });
 })(jQuery);
